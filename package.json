@@ -14,5 +14,11 @@
     "bookmarks"
   ],
   "author": "Mauricio Andrades <mod.and.op@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "lodash": "^4.13.1",
+    "q": "^1.4.1",
+    "underscore.string": "^3.3.4"
+  }
 }

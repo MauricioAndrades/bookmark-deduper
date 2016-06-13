@@ -38,17 +38,17 @@ var s = {
  *  @param   {Function}  callback  cheerioBuild: load and parse the content into json obj
  *  @param   {Function} errHandler global err handler.
  */
-function cheerioLoad(path, callback, errHandler) {
-	var data = fs.readFileSync(path, 'utf8');
+function cheerioLoad(inputPath, outputPath, callback, errHandler) {
+	var data = fs.readFileSync(inputPath, 'utf8');
 	/** call cheerio build with html data */
-	callback(data);
+	callback(data, outputPath);
 }
 
 /**
  *  build and parse our bookmarks into the desired json object
  *  @param   {obj}  html  the contents of our bookmark file
  */
-function cheerioBuild(html) {
+function cheerioBuild(html, output) {
 	var obj = {};
 	var folders = [];
 	var arr = [];
@@ -74,11 +74,11 @@ function cheerioBuild(html) {
 			obj[index] = {
 				'title': $(this).text(),
 				'href': $(this).attr('href'),
-				'date_added': $(this).attr('add_date'),
+				'date_added': $(this).attr('add_date')
 			};
 
-			if($(this).prop('class')){
-				obj[index] = $(this.prop('class'));
+			if ($(this).prop('class')) {
+				obj[index]['folder'] = $(this).prop('class');
 			}
 
 			if ($(this).attr('last_modified')) {
@@ -91,6 +91,10 @@ function cheerioBuild(html) {
 
 			if ($(this).attr('icon_uri')) {
 				obj[index]['icon_uri'] = $(this).attr('icon_uri');
+			}
+
+			if ($(this).next().is('dd')) {
+				obj[index]['description'] = underscore.prune($(this).next().text().trim(), 120);
 			}
 		});
 
@@ -124,7 +128,10 @@ function cheerioBuild(html) {
 
 		/** remove duplicate bookmark entries by href */
 		function dedupe(array) {
+			var initialLength = array.length;
 			var _arr = lodash.uniqBy(array, 'href');
+			var dedupedLength = _arr.length;
+			console.log('removed:' + (initialLength - dedupedLength) + ' links');
 			return _arr;
 		}
 
@@ -135,7 +142,7 @@ function cheerioBuild(html) {
 
 		/** stream the output */
 		var rs = s.readable();
-		var rw = s.writable('./output.json');
+		var rw = s.writable(output);
 		rs.push(JSON.stringify(dedupedArray));
 		rs.pipe(rw);
 		rs.pipe(process.stdout);
@@ -145,4 +152,5 @@ function cheerioBuild(html) {
 	parseLinks();
 }
 
-cheerioLoad('./bin/input/bookmarks-example.html', cheerioBuild, errHandler);
+// cheerioLoad('./bin/input/bookmarks-example.html', cheerioBuild, errHandler);
+cheerioLoad('./bin/input/firefox.html', './bin/output/firefox.json', cheerioBuild, errHandler);

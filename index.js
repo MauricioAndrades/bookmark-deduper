@@ -152,5 +152,4 @@ function cheerioBuild(html, output) {
 	parseLinks();
 }
 
-// cheerioLoad('./bin/input/bookmarks-example.html', cheerioBuild, errHandler);
-cheerioLoad('./bin/input/firefox.html', './bin/output/firefox.json', cheerioBuild, errHandler);
+cheerioLoad('./bin/input/bookmarks-example.html', cheerioBuild, errHandler);

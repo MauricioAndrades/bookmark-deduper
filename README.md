@@ -12,7 +12,13 @@ In this tutorial I am going to describe the creation of a bookmark deduping scri
 
 I've tested it with 18K+ bookmarks and it performs extremely well. I am able to merge multiple bookmark files and end up with a final output of only 2,200.
 
-## require(s) ##
+## clone repo and install dependencies ##
+
+Open up the terminal, navigate to the location you wish to be the parent. Then execute:
+
+```shell
+$ git clone https://github.com/MauricioAndrades/bookmark-deduper.git && cd bookmark-deduper && npm install;
+```
 
 ```js
 var cheerio = require('cheerio');

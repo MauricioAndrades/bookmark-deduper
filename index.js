@@ -36,7 +36,7 @@ var s = {
 /**
  *  load the contents of an html file and pass it to cheerio
  *  @param   {Function}  callback  cheerioBuild: load and parse the content into json obj
- *  @param   {Function} errHandler global err handler.
+ *  @param   {Function}  errHandler global err handler.
  */
 function cheerioLoad(inputPath, outputPath, callback, errHandler) {
   var data = fs.readFileSync(inputPath, 'utf8');

@@ -5,3 +5,5 @@ I wanted to a custom bookmark deduper that could handle thousands of links quick
 I've tested it with 9K+ bookmarks.
 
 It works by converting a bookmarks.html file into an array of objects. Dedupes the objects by `href` and formats the titles to a standard max length with title case.
+
+

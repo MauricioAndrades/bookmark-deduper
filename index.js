@@ -99,6 +99,7 @@ function cheerioBuild(html, output) {
       }
     });
 
+    /** here we flatten the links object and convert it to an array of objects */
     function convertToArrayOfObjects(object) {
       for (var key in object) {
         arr.push(object[key]);

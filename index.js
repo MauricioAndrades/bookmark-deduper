@@ -59,7 +59,7 @@ function cheerioBuild(html, output) {
     decodeEntities: true
   });
 
-  /** find top level grouping and add as folders key */
+  /** find top level grouping and add as class to links key */
   function addClasses() {
     $('dt > h3').each(function() {
       folders.push($(this).text());
@@ -93,8 +93,9 @@ function cheerioBuild(html, output) {
         obj[index]['icon_uri'] = $(this).attr('icon_uri');
       }
 
+      /** format <DD> tag to max length of 240 characters */
       if ($(this).next().is('dd')) {
-        obj[index]['description'] = underscore.prune($(this).next().text().trim(), 120);
+        obj[index]['description'] = underscore.prune($(this).next().text().trim(), 240);
       }
     });
 

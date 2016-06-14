@@ -9,7 +9,7 @@ var underscore = require('underscore.string');
 /**
  *  global error handler
  */
-function errHandler() {
+function errHandler(err) {
   if (err) {
     console.log(err);
     process.exit();
@@ -122,7 +122,7 @@ function cheerioBuild(html, output) {
       for (var i = 0; i < array.length; i++) {
         if (array[i].description) {
           var this_description = array[i].description;
-          var pruned_description = underscore.prune(this_description, 120);
+          var pruned_description = underscore.prune(this_description, 240);
           array[i].description = pruned_description;
         }
       }
@@ -154,4 +154,7 @@ function cheerioBuild(html, output) {
   parseLinks();
 }
 
-cheerioLoad('./bin/input/bookmarks-example.html', cheerioBuild, errHandler);
+/**
+ *  cheerioLoad(inputPath(str), outputPath(str), callback, errHandler)
+ */
+cheerioLoad('./bin/input/bookmarks-example.html', './bin/output/bookmarks.json', cheerioBuild, errHandler);

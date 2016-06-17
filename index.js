@@ -59,7 +59,10 @@ function cheerioBuild(html, output) {
     decodeEntities: true
   });
 
-  /** find top level grouping and add as class to links key */
+  /**
+   *  find top level grouping and add as class to links key
+   *  The <dt> tag defines a term/name in a description list.
+   */
   function addClasses() {
     $('dt > h3').each(function() {
       folders.push($(this).text());
@@ -71,24 +74,37 @@ function cheerioBuild(html, output) {
   function parseLinks() {
     $('a').each(function(index) {
 
+      /** default keys title, href */
       obj[index] = {
         'title': $(this).text(),
         'href': $(this).attr('href'),
-        'date_added': $(this).attr('add_date')
       };
 
+      /**
+       *  here we conditionally add keys only if they exist ass attr or prop in the respective links.
+       */
+
+      /** add_date */
+      if ($(this).attr('add_date')) {
+        obj[index]['add_date'] = $(this).attr('add_date');
+      }
+
+      /** folder is derived from class attribute we added to each 'a' link under each folder */
       if ($(this).prop('class')) {
         obj[index]['folder'] = $(this).prop('class');
       }
 
+      /** key last_modified */
       if ($(this).attr('last_modified')) {
         obj[index]['date_modified'] = $(this).attr('last_modified');
       }
 
+      /** tags */
       if ($(this).attr('tags')) {
         obj[index]['tags'] = $(this).attr('tags');
       }
 
+      /** icon_uri */
       if ($(this).attr('icon_uri')) {
         obj[index]['icon_uri'] = $(this).attr('icon_uri');
       }

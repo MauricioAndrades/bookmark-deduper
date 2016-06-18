@@ -16,7 +16,7 @@ var header = [
 ].join('\n');
 
 /** @type {array} the array of links */
-var links = JSON.parse(fs.readFileSync('./bin/output/bookmarks-example.html', 'utf8'));
+var links = JSON.parse(fs.readFileSync('./bin/output/bookmarks.json', 'utf8'));
 var folders = [];
 var bookmarks = {};
 
@@ -48,7 +48,7 @@ function getFolders(arr) {
         }
     }
 
-    fs.writeFileSync('./dev-bin/output/bookmarks.json', JSON.stringify(bookmarks), 'utf8')
+    fs.writeFileSync('./bin/output/bookmarks.json', JSON.stringify(bookmarks), 'utf8')
 }
 getFolders(links);
 
@@ -94,4 +94,4 @@ function netscape(obj) {
     return s;
 }
 
-fs.writeFileSync('./dev-bin/output/bookmarks-done.html', netscape(bookmarks), 'utf8')
+fs.writeFileSync('./bin/output/bookmarks-fromJSON.html.', netscape(bookmarks), 'utf8')
